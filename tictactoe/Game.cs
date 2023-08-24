@@ -30,6 +30,7 @@ namespace tictactoe
             return _plays.Single(tile => tile.X == x && tile.Y == y);
         }
 
+        //Adds a X to the board
         public void AddTileAt(char symbol, int x, int y)
         {
             var newTile = new Tile
@@ -40,6 +41,19 @@ namespace tictactoe
             };
 
             _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol;
+        }
+
+        //Adds a X to the board
+        public void AddXAt_old(int x, int y)
+        {
+            var newTile = new Tile
+            {
+                X = x,
+                Y = y,
+                Symbol = 'X'
+            };
+
+            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = 'X';
         }
     }
 
@@ -75,6 +89,7 @@ namespace tictactoe
             _board.AddTileAt(symbol, x, y);
         }
 
+        //Decide who lost
         public char Winner()
         {   //if the positions in first row are taken
             if (_board.TileAt(0, 0).Symbol != ' ' &&
