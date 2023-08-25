@@ -16,9 +16,12 @@ namespace tictactoeTests
         [Fact]
         public void NotAllowPlayerOToPlayFirst()
         {
+            // Arrange
             Action wrongPlay = () => game.Play('O', 0, 0);
 
+            // Act
             var exception = Assert.Throws<Exception>(wrongPlay);
+            // Assert
             Assert.Equal("Invalid first player", exception.Message);
         }
 
@@ -59,14 +62,17 @@ namespace tictactoeTests
         [Fact]
         public void DeclarePlayerXAsAWinnerIfThreeInTopRow()
         {
+            // Act
             game.Play('X', 0, 0);
             game.Play('O', 1, 0);
             game.Play('X', 0, 1);
             game.Play('O', 1, 1);
             game.Play('X', 0, 2);
 
+            // Arrange
             var winner = game.Winner();
 
+            // Assert
             Assert.Equal('X', winner);
         }
 
@@ -131,6 +137,7 @@ namespace tictactoeTests
         [Fact]
         public void DeclarePlayerOAsAWinnerIfThreeInBottomRow()
         {
+            // Arrange
             game.Play('X', 0, 0);
             game.Play('O', 2, 0);
             game.Play('X', 1, 0);
@@ -138,8 +145,9 @@ namespace tictactoeTests
             game.Play('X', 1, 1);
             game.Play('O', 2, 2);
 
+            // Act
             var winner = game.Winner();
-
+            // Assert
             Assert.Equal('O', winner);
         }
     }
