@@ -42,10 +42,13 @@ namespace tictactoeTests
         [Fact]
         public void NotAllowPlayerToPlayInLastPlayedPosition()
         {
+            // Arrange
             game.Play('X', 0, 0);
 
+            // Arrange
             Action wrongPlay = () => game.Play('O', 0, 0);
 
+            // Assert
             var exception = Assert.Throws<Exception>(wrongPlay);
             Assert.Equal("Invalid position", exception.Message);
         }
