@@ -28,10 +28,13 @@ namespace tictactoeTests
         [Fact]
         public void NotAllowPlayerXToPlayTwiceInARow()
         {
+            // Arrange
             game.Play('X', 0, 0);
 
+            // Act
             Action wrongPlay = () => game.Play('X', 1, 0);
 
+            // Assert
             var exception = Assert.Throws<Exception>(wrongPlay);
             Assert.Equal("Invalid next player", exception.Message);
         }
