@@ -3,7 +3,7 @@
     public class Board //TODO: Large class (file). Move to separate file
     {
         private List<Tile> _plays = new List<Tile>();
-        private readonly int _boardSize = 3;
+        public readonly int BoardSize = 3;
 
         public Board()
         {
@@ -12,9 +12,9 @@
 
         private void InitateEmptyBoard()
         {
-            for (int row = 0; row < _boardSize; row++) 
+            for (int row = 0; row < BoardSize; row++) 
             {
-                for (int column = 0; column < _boardSize; column++)
+                for (int column = 0; column < BoardSize; column++)
                 {
                     _plays.Add(new Tile { X = row, Y = column, Symbol = Symbol.Empty});
                 }

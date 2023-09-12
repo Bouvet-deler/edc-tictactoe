@@ -29,17 +29,25 @@
                 ValidateFirstMove(symbol);
             }
 
-            //if not first move but player repeated
-            if (symbol == _lastSymbol)
+            if (IsSamePlayerAsLastTime(symbol))
             {
                 throw new Exception("Invalid next player");
             }
 
-            //if not first move but play on an already played tile
-            if (_board.TileAt(x, y).Symbol != Symbol.Empty)
+            if (IsOccupied(x, y))
             {
                 throw new Exception("Invalid position");
             }
+        }
+
+        private bool IsOccupied(int x, int y)
+        {
+            return _board.TileAt(x, y).Symbol != Symbol.Empty;
+        }
+
+        private bool IsSamePlayerAsLastTime(Symbol symbol)
+        {
+            return symbol == _lastSymbol;
         }
 
         private static void ValidateFirstMove(Symbol symbol)
@@ -56,22 +64,22 @@
         }
 
         //Decide who lost 
-        public Symbol Winner() //TODO: Bad naming, magic numbers all over (row number, column number, empty tile, 
+        public Symbol CheckWinner() // magic numbers all over (row number, column number, empty tile, 
         {   //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
             if (_board.TileAt(0, 0).Symbol != Symbol.Empty &&
                _board.TileAt(0, 1).Symbol != Symbol.Empty &&
                _board.TileAt(0, 2).Symbol != Symbol.Empty)
-            {
-                //if first row is full with same symbol
-                if (_board.TileAt(0, 0).Symbol ==
-                    _board.TileAt(0, 1).Symbol &&
-                    _board.TileAt(0, 2).Symbol ==
-                    _board.TileAt(0, 1).Symbol)
                 {
-                    return _board.TileAt(0, 0).Symbol;
+                    //if first row is full with same symbol
+                    if (_board.TileAt(0, 0).Symbol ==
+                        _board.TileAt(0, 1).Symbol &&
+                        _board.TileAt(0, 2).Symbol ==
+                        _board.TileAt(0, 1).Symbol)
+                    {
+                        return _board.TileAt(0, 0).Symbol;
+                    }
                 }
-            }
-
+            
             //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
             if (_board.TileAt(1, 0).Symbol != Symbol.Empty &&
                _board.TileAt(1, 1).Symbol != Symbol.Empty &&
