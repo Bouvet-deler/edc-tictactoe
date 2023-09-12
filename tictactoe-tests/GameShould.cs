@@ -17,7 +17,7 @@ namespace tictactoeTests
         public void NotAllowPlayerOToPlayFirst()
         {
             // Arrange
-            Action wrongPlay = () => game.Play('O', 0, 0);
+            Action wrongPlay = () => game.Play(Symbol.O, 0, 0);
 
             // Act
             var exception = Assert.Throws<Exception>(wrongPlay);
@@ -29,10 +29,10 @@ namespace tictactoeTests
         public void NotAllowPlayerXToPlayTwiceInARow() //TODO: Bad name, introduce theory to also test O twice
         {
             // Arrange
-            game.Play('X', 0, 0);
+            game.Play(Symbol.X, 0, 0);
 
             // Act
-            Action wrongPlay = () => game.Play('X', 1, 0);
+            Action wrongPlay = () => game.Play(Symbol.X, 1, 0);
 
             // Assert
             var exception = Assert.Throws<Exception>(wrongPlay);
@@ -43,10 +43,10 @@ namespace tictactoeTests
         public void NotAllowPlayerToPlayInLastPlayedPosition() //TODO: Duplicate code, does about the same as the one below
         {
             // Arrange
-            game.Play('X', 0, 0);
+            game.Play(Symbol.X, 0, 0);
 
             // Arrange
-            Action wrongPlay = () => game.Play('O', 0, 0);
+            Action wrongPlay = () => game.Play(Symbol.O, 0, 0);
 
             // Assert
             var exception = Assert.Throws<Exception>(wrongPlay);
@@ -56,10 +56,10 @@ namespace tictactoeTests
         [Fact]
         public void NotAllowPlayerToPlayInAnyPlayedPosition()
         {
-            game.Play('X', 0, 0);
-            game.Play('O', 1, 0);
+            game.Play(Symbol.X, 0, 0);
+            game.Play(Symbol.O, 1, 0);
 
-            Action wrongPlay = () => game.Play('X', 0, 0);
+            Action wrongPlay = () => game.Play(Symbol.X, 0, 0);
 
             var exception = Assert.Throws<Exception>(wrongPlay);
             Assert.Equal("Invalid position", exception.Message); //TODO: Magic number
@@ -69,92 +69,92 @@ namespace tictactoeTests
         public void DeclarePlayerXAsAWinnerIfThreeInTopRow() //TODO: Duplicate code, use Theory?
         {
             // Act //TODO: Comment not needed and actually wrong, Duplicate code
-            game.Play('X', 0, 0);
-            game.Play('O', 1, 0);
-            game.Play('X', 0, 1);
-            game.Play('O', 1, 1);
-            game.Play('X', 0, 2);
+            game.Play(Symbol.X, 0, 0);
+            game.Play(Symbol.O, 1, 0);
+            game.Play(Symbol.X, 0, 1);
+            game.Play(Symbol.O, 1, 1);
+            game.Play(Symbol.X, 0, 2);
 
             // Arrange //TODO: Comment not needed and actually wrong,
             var winner = game.Winner();
 
             // Assert //TODO: Comment not needed and actually wrong,
-            Assert.Equal('X', winner);
+            Assert.Equal(Symbol.X, winner);
         }
 
         [Fact]
         public void DeclarePlayerOAsAWinnerIfThreeInTopRow() //TODO: Duplicate code, use Theory?
         {
-            game.Play('X', 2, 2);
-            game.Play('O', 0, 0);
-            game.Play('X', 1, 0);
-            game.Play('O', 0, 1);
-            game.Play('X', 1, 1);
-            game.Play('O', 0, 2);
+            game.Play(Symbol.X, 2, 2);
+            game.Play(Symbol.O, 0, 0);
+            game.Play(Symbol.X, 1, 0);
+            game.Play(Symbol.O, 0, 1);
+            game.Play(Symbol.X, 1, 1);
+            game.Play(Symbol.O, 0, 2);
 
             var winner = game.Winner();
 
-            Assert.Equal('O', winner);
+            Assert.Equal(Symbol.O, winner);
         }
 
         [Fact]
         public void DeclarePlayerXAsAWinnerIfThreeInMiddleRow() //TODO: Duplicate code, use Theory?
         {
-            game.Play('X', 1, 0);
-            game.Play('O', 0, 0);
-            game.Play('X', 1, 1);
-            game.Play('O', 0, 1);
-            game.Play('X', 1, 2);
+            game.Play(Symbol.X, 1, 0);
+            game.Play(Symbol.O, 0, 0);
+            game.Play(Symbol.X, 1, 1);
+            game.Play(Symbol.O, 0, 1);
+            game.Play(Symbol.X, 1, 2);
 
             var winner = game.Winner();
 
-            Assert.Equal('X', winner);
+            Assert.Equal(Symbol.X, winner);
         }
 
         [Fact]
         public void DeclarePlayerOAsAWinnerIfThreeInMiddleRow() //TODO: Duplicate code, use Theory?
         {
-            game.Play('X', 0, 0);
-            game.Play('O', 1, 0);
-            game.Play('X', 2, 0);
-            game.Play('O', 1, 1);
-            game.Play('X', 2, 1);
-            game.Play('O', 1, 2);
+            game.Play(Symbol.X, 0, 0);
+            game.Play(Symbol.O, 1, 0);
+            game.Play(Symbol.X, 2, 0);
+            game.Play(Symbol.O, 1, 1);
+            game.Play(Symbol.X, 2, 1);
+            game.Play(Symbol.O, 1, 2);
 
             var winner = game.Winner();
 
-            Assert.Equal('O', winner);
+            Assert.Equal(Symbol.O, winner);
         }
 
         [Fact]
         public void DeclarePlayerXAsAWinnerIfThreeInBottomRow() //TODO: Duplicate code, use Theory?
         {
-            game.Play('X', 2, 0);
-            game.Play('O', 0, 0);
-            game.Play('X', 2, 1);
-            game.Play('O', 0, 1);
-            game.Play('X', 2, 2);
+            game.Play(Symbol.X, 2, 0);
+            game.Play(Symbol.O, 0, 0);
+            game.Play(Symbol.X, 2, 1);
+            game.Play(Symbol.O, 0, 1);
+            game.Play(Symbol.X, 2, 2);
 
             var winner = game.Winner();
 
-            Assert.Equal('X', winner);
+            Assert.Equal(Symbol.X, winner);
         }
 
         [Fact]
         public void DeclarePlayerOAsAWinnerIfThreeInBottomRow() //TODO: Duplicate code, use Theory?
         {
             // Arrange
-            game.Play('X', 0, 0);
-            game.Play('O', 2, 0);
-            game.Play('X', 1, 0);
-            game.Play('O', 2, 1);
-            game.Play('X', 1, 1);
-            game.Play('O', 2, 2);
+            game.Play(Symbol.X, 0, 0);
+            game.Play(Symbol.O, 2, 0);
+            game.Play(Symbol.X, 1, 0);
+            game.Play(Symbol.O, 2, 1);
+            game.Play(Symbol.X, 1, 1);
+            game.Play(Symbol.O, 2, 2);
 
             // Act
             var winner = game.Winner();
             // Assert
-            Assert.Equal('O', winner);
+            Assert.Equal(Symbol.O, winner);
         }
     }
 }

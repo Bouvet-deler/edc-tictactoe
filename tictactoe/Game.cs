@@ -4,14 +4,20 @@
     {
         public int X { get; set; } //TODO: Primitive obsession
         public int Y { get; set; } //TODO: Primitive obsession
-        public char Symbol { get; set; }
+        public Symbol Symbol { get; set; }
     }
 
+    public enum Symbol
+    {
+        Empty,
+        X,
+        O
+    }
     public class Board //TODO: Large class (file). Move to separate file
     {
         private List<Tile> _plays = new List<Tile>();
         private readonly int _boardSize = 3;
-        private readonly char _emptyTileSymbol = ' ';
+
         public Board()
         {
             InitateEmptyBoard();
@@ -23,7 +29,7 @@
             {
                 for (int column = 0; column < _boardSize; column++)
                 {
-                    _plays.Add(new Tile { X = row, Y = column, Symbol = _emptyTileSymbol});
+                    _plays.Add(new Tile { X = row, Y = column, Symbol = Symbol.Empty});
                 }
             }
         }
@@ -34,7 +40,7 @@
         }
 
         //Adds a X to the board //TODO: Comment code smell, bad naming
-        public void AddTileAt(char symbol, int x, int y) //Inconsistent order of arguments
+        public void AddTileAt(Symbol symbol, int x, int y) //Inconsistent order of arguments
         {
             _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol;  //TODO: Duplicate code
         }
@@ -42,16 +48,16 @@
 
     public class Game
     {
-        private char _lastSymbol = ' ';
+        
         private Board _board = new Board(); //TODO: Use new shorthand syntax
-
-        public void Play(char symbol, int x, int y) //TODO: Introduce assertion, long method
+        private Symbol _lastSymbol = Symbol.Empty;
+        public void Play(Symbol symbol, int x, int y) //TODO: Introduce assertion, long method
         {
             //if first move
-            if (_lastSymbol == ' ') //Todo: Complicated if statements, and not really related
+            if (_lastSymbol == Symbol.Empty) //Todo: Complicated if statements, and not really related
             {
                 //if player is X //TODO: Comment, it's wrong
-                if (symbol == 'O')
+                if (symbol == Symbol.O)
                 {
                     throw new Exception("Invalid first player"); //TODO: Should implement a more specific exception type
                 }
@@ -62,7 +68,7 @@
                 throw new Exception("Invalid next player");
             }
             //if not first move but play on an already played tile
-            else if (_board.TileAt(x, y).Symbol != ' ')
+            else if (_board.TileAt(x, y).Symbol != Symbol.Empty)
             {
                 throw new Exception("Invalid position");
             }
@@ -73,11 +79,11 @@
         }
 
         //Decide who lost 
-        public char Winner() //TODO: Bad naming, magic numbers all over (row number, column number, empty tile, 
+        public Symbol Winner() //TODO: Bad naming, magic numbers all over (row number, column number, empty tile, 
         {   //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
-            if (_board.TileAt(0, 0).Symbol != ' ' &&
-               _board.TileAt(0, 1).Symbol != ' ' &&
-               _board.TileAt(0, 2).Symbol != ' ')
+            if (_board.TileAt(0, 0).Symbol != Symbol.Empty &&
+               _board.TileAt(0, 1).Symbol != Symbol.Empty &&
+               _board.TileAt(0, 2).Symbol != Symbol.Empty)
             {
                 //if first row is full with same symbol
                 if (_board.TileAt(0, 0).Symbol ==
@@ -90,9 +96,9 @@
             }
 
             //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
-            if (_board.TileAt(1, 0).Symbol != ' ' &&
-               _board.TileAt(1, 1).Symbol != ' ' &&
-               _board.TileAt(1, 2).Symbol != ' ')
+            if (_board.TileAt(1, 0).Symbol != Symbol.Empty &&
+               _board.TileAt(1, 1).Symbol != Symbol.Empty &&
+               _board.TileAt(1, 2).Symbol != Symbol.Empty)
             {
                 //if middle row is full with same symbol
                 if (_board.TileAt(1, 0).Symbol ==
@@ -105,9 +111,9 @@
             }
 
             //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
-            if (_board.TileAt(2, 0).Symbol != ' ' &&
-               _board.TileAt(2, 1).Symbol != ' ' &&
-               _board.TileAt(2, 2).Symbol != ' ')
+            if (_board.TileAt(2, 0).Symbol != Symbol.Empty &&
+               _board.TileAt(2, 1).Symbol != Symbol.Empty &&
+               _board.TileAt(2, 2).Symbol != Symbol.Empty)
             {
                 //if middle row is full with same symbol
                 if (_board.TileAt(2, 0).Symbol ==
@@ -119,7 +125,7 @@
                 }
             }
 
-            return ' ';
+            return Symbol.Empty;
         }
     }
 }
