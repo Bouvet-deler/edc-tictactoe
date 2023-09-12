@@ -1,19 +1,19 @@
 ﻿namespace tictactoe
 {
-    public class Tile
+    public class Tile //TODO: Large class (file). Move to separate file
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; set; } //TODO: Primitive obsession
+        public int Y { get; set; } //TODO: Primitive obsession
         public char Symbol { get; set; }
     }
 
-    public class Board
+    public class Board //TODO: Large class (file). Move to separate file
     {
         private List<Tile> _plays = new List<Tile>();
 
         public Board()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++) //TODO: Extract method: CreateBoard / InstantiateBoard?, magic numbers, 0 and 3, empty tile symbol
             {
                 for (int j = 0; j < 3; j++)
                 {
@@ -23,23 +23,23 @@
         }
         public Tile TileAt(int x, int y)
         {
-            return _plays.Single(tile => tile.X == x && tile.Y == y);
+            return _plays.Single(tile => tile.X == x && tile.Y == y); //TODO: Duplicate code
         }
 
-        //Adds a X to the board
-        public void AddTileAt(char symbol, int x, int y)
+        //Adds a X to the board //TODO: Comment code smell, bad naming
+        public void AddTileAt(char symbol, int x, int y) //Inconsistent order of arguments
         {
-            var newTile = new Tile
+            var newTile = new Tile //TODO: Dead code, remove it
             {
                 X = x,
                 Y = y,
                 Symbol = symbol
             };
 
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol;
+            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol;  //TODO: Duplicate code
         }
 
-        //Adds a X to the board
+        //Adds a X to the board //TODO: Dead code
         public void AddXAt_old(int x, int y)
         {
             var newTile = new Tile
@@ -56,17 +56,17 @@
     public class Game
     {
         private char _lastSymbol = ' ';
-        private Board _board = new Board();
+        private Board _board = new Board(); //TODO: Use new shorthand syntax
 
-        public void Play(char symbol, int x, int y)
+        public void Play(char symbol, int x, int y) //TODO: Introduce assertion, long method
         {
             //if first move
-            if (_lastSymbol == ' ')
+            if (_lastSymbol == ' ') //Todo: Complicated if statements, and not really related
             {
-                //if player is X
+                //if player is X //TODO: Comment, it's wrong
                 if (symbol == 'O')
                 {
-                    throw new Exception("Invalid first player");
+                    throw new Exception("Invalid first player"); //TODO: Should implement a more specific exception type
                 }
             }
             //if not first move but player repeated
@@ -85,9 +85,9 @@
             _board.AddTileAt(symbol, x, y);
         }
 
-        //Decide who lost
-        public char Winner()
-        {   //if the positions in first row are taken
+        //Decide who lost 
+        public char Winner() //TODO: Bad naming, magic numbers all over (row number, column number, empty tile, 
+        {   //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
             if (_board.TileAt(0, 0).Symbol != ' ' &&
                _board.TileAt(0, 1).Symbol != ' ' &&
                _board.TileAt(0, 2).Symbol != ' ')
@@ -102,7 +102,7 @@
                 }
             }
 
-            //if the positions in first row are taken
+            //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
             if (_board.TileAt(1, 0).Symbol != ' ' &&
                _board.TileAt(1, 1).Symbol != ' ' &&
                _board.TileAt(1, 2).Symbol != ' ')
@@ -117,7 +117,7 @@
                 }
             }
 
-            //if the positions in first row are taken
+            //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
             if (_board.TileAt(2, 0).Symbol != ' ' &&
                _board.TileAt(2, 1).Symbol != ' ' &&
                _board.TileAt(2, 2).Symbol != ' ')

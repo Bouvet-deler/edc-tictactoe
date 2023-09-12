@@ -1,4 +1,4 @@
-using System;
+using System; //TODO: Dead code, remove
 using Xunit;
 using tictactoe;
 
@@ -22,11 +22,11 @@ namespace tictactoeTests
             // Act
             var exception = Assert.Throws<Exception>(wrongPlay);
             // Assert
-            Assert.Equal("Invalid first player", exception.Message);
+            Assert.Equal("Invalid first player", exception.Message); //TODO: Magic number
         }
 
         [Fact]
-        public void NotAllowPlayerXToPlayTwiceInARow()
+        public void NotAllowPlayerXToPlayTwiceInARow() //TODO: Bad name, introduce theory to also test O twice
         {
             // Arrange
             game.Play('X', 0, 0);
@@ -36,11 +36,11 @@ namespace tictactoeTests
 
             // Assert
             var exception = Assert.Throws<Exception>(wrongPlay);
-            Assert.Equal("Invalid next player", exception.Message);
+            Assert.Equal("Invalid next player", exception.Message); //TODO: Magic number
         }
 
         [Fact]
-        public void NotAllowPlayerToPlayInLastPlayedPosition()
+        public void NotAllowPlayerToPlayInLastPlayedPosition() //TODO: Duplicate code, does about the same as the one below
         {
             // Arrange
             game.Play('X', 0, 0);
@@ -50,7 +50,7 @@ namespace tictactoeTests
 
             // Assert
             var exception = Assert.Throws<Exception>(wrongPlay);
-            Assert.Equal("Invalid position", exception.Message);
+            Assert.Equal("Invalid position", exception.Message); //TODO: Magic number
         }
 
         [Fact]
@@ -62,28 +62,28 @@ namespace tictactoeTests
             Action wrongPlay = () => game.Play('X', 0, 0);
 
             var exception = Assert.Throws<Exception>(wrongPlay);
-            Assert.Equal("Invalid position", exception.Message);
+            Assert.Equal("Invalid position", exception.Message); //TODO: Magic number
         }
 
         [Fact]
-        public void DeclarePlayerXAsAWinnerIfThreeInTopRow()
+        public void DeclarePlayerXAsAWinnerIfThreeInTopRow() //TODO: Duplicate code, use Theory?
         {
-            // Act
+            // Act //TODO: Comment not needed and actually wrong, Duplicate code
             game.Play('X', 0, 0);
             game.Play('O', 1, 0);
             game.Play('X', 0, 1);
             game.Play('O', 1, 1);
             game.Play('X', 0, 2);
 
-            // Arrange
+            // Arrange //TODO: Comment not needed and actually wrong,
             var winner = game.Winner();
 
-            // Assert
+            // Assert //TODO: Comment not needed and actually wrong,
             Assert.Equal('X', winner);
         }
 
         [Fact]
-        public void DeclarePlayerOAsAWinnerIfThreeInTopRow()
+        public void DeclarePlayerOAsAWinnerIfThreeInTopRow() //TODO: Duplicate code, use Theory?
         {
             game.Play('X', 2, 2);
             game.Play('O', 0, 0);
@@ -98,7 +98,7 @@ namespace tictactoeTests
         }
 
         [Fact]
-        public void DeclarePlayerXAsAWinnerIfThreeInMiddleRow()
+        public void DeclarePlayerXAsAWinnerIfThreeInMiddleRow() //TODO: Duplicate code, use Theory?
         {
             game.Play('X', 1, 0);
             game.Play('O', 0, 0);
@@ -112,7 +112,7 @@ namespace tictactoeTests
         }
 
         [Fact]
-        public void DeclarePlayerOAsAWinnerIfThreeInMiddleRow()
+        public void DeclarePlayerOAsAWinnerIfThreeInMiddleRow() //TODO: Duplicate code, use Theory?
         {
             game.Play('X', 0, 0);
             game.Play('O', 1, 0);
@@ -127,7 +127,7 @@ namespace tictactoeTests
         }
 
         [Fact]
-        public void DeclarePlayerXAsAWinnerIfThreeInBottomRow()
+        public void DeclarePlayerXAsAWinnerIfThreeInBottomRow() //TODO: Duplicate code, use Theory?
         {
             game.Play('X', 2, 0);
             game.Play('O', 0, 0);
@@ -141,7 +141,7 @@ namespace tictactoeTests
         }
 
         [Fact]
-        public void DeclarePlayerOAsAWinnerIfThreeInBottomRow()
+        public void DeclarePlayerOAsAWinnerIfThreeInBottomRow() //TODO: Duplicate code, use Theory?
         {
             // Arrange
             game.Play('X', 0, 0);
