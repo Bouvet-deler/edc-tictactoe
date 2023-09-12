@@ -17,7 +17,7 @@ namespace tictactoeTests
         public void NotAllowPlayerOToPlayFirst()
         {
             // Arrange
-            Action wrongPlay = () => game.Play(Symbol.O, 0, 0);
+            Action wrongPlay = () => game.MakeMove(0, 0, Symbol.O);
 
             // Act
             var exception = Assert.Throws<Exception>(wrongPlay);
@@ -29,10 +29,10 @@ namespace tictactoeTests
         public void NotAllowPlayerXToPlayTwiceInARow() //TODO: Bad name, introduce theory to also test O twice
         {
             // Arrange
-            game.Play(Symbol.X, 0, 0);
+            game.MakeMove(0, 0, Symbol.X);
 
             // Act
-            Action wrongPlay = () => game.Play(Symbol.X, 1, 0);
+            Action wrongPlay = () => game.MakeMove(1, 0, Symbol.X);
 
             // Assert
             var exception = Assert.Throws<Exception>(wrongPlay);
@@ -43,10 +43,10 @@ namespace tictactoeTests
         public void NotAllowPlayerToPlayInLastPlayedPosition() //TODO: Duplicate code, does about the same as the one below
         {
             // Arrange
-            game.Play(Symbol.X, 0, 0);
+            game.MakeMove(0, 0, Symbol.X);
 
             // Arrange
-            Action wrongPlay = () => game.Play(Symbol.O, 0, 0);
+            Action wrongPlay = () => game.MakeMove(0, 0, Symbol.O);
 
             // Assert
             var exception = Assert.Throws<Exception>(wrongPlay);
@@ -56,10 +56,10 @@ namespace tictactoeTests
         [Fact]
         public void NotAllowPlayerToPlayInAnyPlayedPosition()
         {
-            game.Play(Symbol.X, 0, 0);
-            game.Play(Symbol.O, 1, 0);
+            game.MakeMove(0, 0, Symbol.X);
+            game.MakeMove(1, 0, Symbol.O);
 
-            Action wrongPlay = () => game.Play(Symbol.X, 0, 0);
+            Action wrongPlay = () => game.MakeMove(0, 0, Symbol.X);
 
             var exception = Assert.Throws<Exception>(wrongPlay);
             Assert.Equal("Invalid position", exception.Message); //TODO: Magic number
@@ -69,11 +69,11 @@ namespace tictactoeTests
         public void DeclarePlayerXAsAWinnerIfThreeInTopRow() //TODO: Duplicate code, use Theory?
         {
             // Act //TODO: Comment not needed and actually wrong, Duplicate code
-            game.Play(Symbol.X, 0, 0);
-            game.Play(Symbol.O, 1, 0);
-            game.Play(Symbol.X, 0, 1);
-            game.Play(Symbol.O, 1, 1);
-            game.Play(Symbol.X, 0, 2);
+            game.MakeMove(0, 0, Symbol.X);
+            game.MakeMove(1, 0, Symbol.O);
+            game.MakeMove(0, 1, Symbol.X);
+            game.MakeMove(1, 1, Symbol.O);
+            game.MakeMove(0, 2, Symbol.X);
 
             // Arrange //TODO: Comment not needed and actually wrong,
             var winner = game.Winner();
@@ -85,12 +85,12 @@ namespace tictactoeTests
         [Fact]
         public void DeclarePlayerOAsAWinnerIfThreeInTopRow() //TODO: Duplicate code, use Theory?
         {
-            game.Play(Symbol.X, 2, 2);
-            game.Play(Symbol.O, 0, 0);
-            game.Play(Symbol.X, 1, 0);
-            game.Play(Symbol.O, 0, 1);
-            game.Play(Symbol.X, 1, 1);
-            game.Play(Symbol.O, 0, 2);
+            game.MakeMove(2, 2, Symbol.X);
+            game.MakeMove(0, 0, Symbol.O);
+            game.MakeMove(1, 0, Symbol.X);
+            game.MakeMove(0, 1, Symbol.O);
+            game.MakeMove(1, 1, Symbol.X);
+            game.MakeMove(0, 2, Symbol.O);
 
             var winner = game.Winner();
 
@@ -100,11 +100,11 @@ namespace tictactoeTests
         [Fact]
         public void DeclarePlayerXAsAWinnerIfThreeInMiddleRow() //TODO: Duplicate code, use Theory?
         {
-            game.Play(Symbol.X, 1, 0);
-            game.Play(Symbol.O, 0, 0);
-            game.Play(Symbol.X, 1, 1);
-            game.Play(Symbol.O, 0, 1);
-            game.Play(Symbol.X, 1, 2);
+            game.MakeMove(1, 0, Symbol.X);
+            game.MakeMove(0, 0, Symbol.O);
+            game.MakeMove(1, 1, Symbol.X);
+            game.MakeMove(0, 1, Symbol.O);
+            game.MakeMove(1, 2, Symbol.X);
 
             var winner = game.Winner();
 
@@ -114,12 +114,12 @@ namespace tictactoeTests
         [Fact]
         public void DeclarePlayerOAsAWinnerIfThreeInMiddleRow() //TODO: Duplicate code, use Theory?
         {
-            game.Play(Symbol.X, 0, 0);
-            game.Play(Symbol.O, 1, 0);
-            game.Play(Symbol.X, 2, 0);
-            game.Play(Symbol.O, 1, 1);
-            game.Play(Symbol.X, 2, 1);
-            game.Play(Symbol.O, 1, 2);
+            game.MakeMove(0, 0, Symbol.X);
+            game.MakeMove(1, 0, Symbol.O);
+            game.MakeMove(2, 0, Symbol.X);
+            game.MakeMove(1, 1, Symbol.O);
+            game.MakeMove(2, 1, Symbol.X);
+            game.MakeMove(1, 2, Symbol.O);
 
             var winner = game.Winner();
 
@@ -129,11 +129,11 @@ namespace tictactoeTests
         [Fact]
         public void DeclarePlayerXAsAWinnerIfThreeInBottomRow() //TODO: Duplicate code, use Theory?
         {
-            game.Play(Symbol.X, 2, 0);
-            game.Play(Symbol.O, 0, 0);
-            game.Play(Symbol.X, 2, 1);
-            game.Play(Symbol.O, 0, 1);
-            game.Play(Symbol.X, 2, 2);
+            game.MakeMove(2, 0, Symbol.X);
+            game.MakeMove(0, 0, Symbol.O);
+            game.MakeMove(2, 1, Symbol.X);
+            game.MakeMove(0, 1, Symbol.O);
+            game.MakeMove(2, 2, Symbol.X);
 
             var winner = game.Winner();
 
@@ -144,12 +144,12 @@ namespace tictactoeTests
         public void DeclarePlayerOAsAWinnerIfThreeInBottomRow() //TODO: Duplicate code, use Theory?
         {
             // Arrange
-            game.Play(Symbol.X, 0, 0);
-            game.Play(Symbol.O, 2, 0);
-            game.Play(Symbol.X, 1, 0);
-            game.Play(Symbol.O, 2, 1);
-            game.Play(Symbol.X, 1, 1);
-            game.Play(Symbol.O, 2, 2);
+            game.MakeMove(0, 0, Symbol.X);
+            game.MakeMove(2, 0, Symbol.O);
+            game.MakeMove(1, 0, Symbol.X);
+            game.MakeMove(2, 1, Symbol.O);
+            game.MakeMove(1, 1, Symbol.X);
+            game.MakeMove(2, 2, Symbol.O);
 
             // Act
             var winner = game.Winner();

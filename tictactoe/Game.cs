@@ -11,33 +11,48 @@
     public class Game
     {
         
-        private Board _board = new Board(); //TODO: Use new shorthand syntax
+        private Board _board = new (); 
         private Symbol _lastSymbol = Symbol.Empty;
-        public void Play(Symbol symbol, int x, int y) //TODO: Introduce assertion, long method
+        public void MakeMove(int x, int y, Symbol symbol)
         {
-            //if first move
-            if (_lastSymbol == Symbol.Empty) //Todo: Complicated if statements, and not really related
-            {
-                //if player is X //TODO: Comment, it's wrong
-                if (symbol == Symbol.O)
-                {
-                    throw new Exception("Invalid first player"); //TODO: Should implement a more specific exception type
-                }
-            }
-            //if not first move but player repeated
-            else if (symbol == _lastSymbol)
-            {
-                throw new Exception("Invalid next player");
-            }
-            //if not first move but play on an already played tile
-            else if (_board.TileAt(x, y).Symbol != Symbol.Empty)
-            {
-                throw new Exception("Invalid position");
-            }
+            ValidateMove(x, y, symbol);
 
             // update game state
             _lastSymbol = symbol;
             _board.AddTileAt(symbol, x, y);
+        }
+
+        private void ValidateMove(int x, int y, Symbol symbol)
+        {
+            if (IsFirstMove())
+            {
+                ValidateFirstMove(symbol);
+            }
+
+            //if not first move but player repeated
+            if (symbol == _lastSymbol)
+            {
+                throw new Exception("Invalid next player");
+            }
+
+            //if not first move but play on an already played tile
+            if (_board.TileAt(x, y).Symbol != Symbol.Empty)
+            {
+                throw new Exception("Invalid position");
+            }
+        }
+
+        private static void ValidateFirstMove(Symbol symbol)
+        {
+            if (symbol == Symbol.O)
+            {
+                throw new Exception("Invalid first player"); //TODO: Should implement a more specific exception type
+            }
+        }
+
+        private bool IsFirstMove()
+        {
+            return _lastSymbol == Symbol.Empty;
         }
 
         //Decide who lost 
