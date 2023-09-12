@@ -1,6 +1,6 @@
 ﻿namespace tictactoe
 {
-    public class Board //TODO: Large class (file). Move to separate file
+    public class Board
     {
         private List<Tile> _plays = new List<Tile>();
         public readonly int BoardSize = 3;
@@ -23,13 +23,12 @@
 
         public Tile TileAt(int x, int y)
         {
-            return _plays.Single(tile => tile.X == x && tile.Y == y); //TODO: Duplicate code
+            return _plays.Single(tile => tile.X == x && tile.Y == y); 
         }
 
-        //Adds a X to the board //TODO: Comment code smell, bad naming
-        public void AddTileAt(Symbol symbol, int x, int y) //Inconsistent order of arguments
+        public void UpdateSymbolAt(int x, int y, Symbol symbol)
         {
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol;  //TODO: Duplicate code
+            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol; 
         }
     }
 }

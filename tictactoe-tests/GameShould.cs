@@ -1,6 +1,5 @@
-using System; //TODO: Dead code, remove
-using Xunit;
 using tictactoe;
+using Xunit;
 
 namespace tictactoeTests
 {
@@ -20,7 +19,7 @@ namespace tictactoeTests
             Action wrongPlay = () => game.MakeMove(0, 0, Symbol.O);
 
             // Act
-            var exception = Assert.Throws<Exception>(wrongPlay);
+            var exception = Assert.Throws<InvalidMoveException>(wrongPlay);
             // Assert
             Assert.Equal("Invalid first player", exception.Message); //TODO: Magic number
         }
@@ -35,7 +34,7 @@ namespace tictactoeTests
             Action wrongPlay = () => game.MakeMove(1, 0, Symbol.X);
 
             // Assert
-            var exception = Assert.Throws<Exception>(wrongPlay);
+            var exception = Assert.Throws<InvalidMoveException>(wrongPlay);
             Assert.Equal("Invalid next player", exception.Message); //TODO: Magic number
         }
 
@@ -49,7 +48,7 @@ namespace tictactoeTests
             Action wrongPlay = () => game.MakeMove(0, 0, Symbol.O);
 
             // Assert
-            var exception = Assert.Throws<Exception>(wrongPlay);
+            var exception = Assert.Throws<InvalidMoveException>(wrongPlay);
             Assert.Equal("Invalid position", exception.Message); //TODO: Magic number
         }
 
@@ -61,7 +60,7 @@ namespace tictactoeTests
 
             Action wrongPlay = () => game.MakeMove(0, 0, Symbol.X);
 
-            var exception = Assert.Throws<Exception>(wrongPlay);
+            var exception = Assert.Throws<InvalidMoveException>(wrongPlay);
             Assert.Equal("Invalid position", exception.Message); //TODO: Magic number
         }
 

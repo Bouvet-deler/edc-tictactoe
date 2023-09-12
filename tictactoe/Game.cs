@@ -8,6 +8,10 @@
         O
     }
 
+    public class InvalidMoveException: Exception {
+        public InvalidMoveException(string message) : base(message) { }
+    }
+
     public class Game
     {
         
@@ -17,9 +21,8 @@
         {
             ValidateMove(x, y, symbol);
 
-            // update game state
             _lastSymbol = symbol;
-            _board.AddTileAt(symbol, x, y);
+            _board.UpdateSymbolAt(x, y, symbol);
         }
 
         private void ValidateMove(int x, int y, Symbol symbol)
@@ -31,12 +34,12 @@
 
             if (IsSamePlayerAsLastTime(symbol))
             {
-                throw new Exception("Invalid next player");
+                throw new InvalidMoveException("Invalid next player");
             }
 
             if (IsOccupied(x, y))
             {
-                throw new Exception("Invalid position");
+                throw new InvalidMoveException("Invalid position");
             }
         }
 
@@ -54,7 +57,7 @@
         {
             if (symbol == Symbol.O)
             {
-                throw new Exception("Invalid first player"); //TODO: Should implement a more specific exception type
+                throw new InvalidMoveException("Invalid first player");
             }
         }
 
@@ -63,54 +66,54 @@
             return _lastSymbol == Symbol.Empty;
         }
 
-        //Decide who lost 
-        public Symbol CheckWinner() // magic numbers all over (row number, column number, empty tile, 
-        {   //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
-            if (_board.TileAt(0, 0).Symbol != Symbol.Empty &&
-               _board.TileAt(0, 1).Symbol != Symbol.Empty &&
-               _board.TileAt(0, 2).Symbol != Symbol.Empty)
+        public Symbol CheckWinner()
+        {
+            for(int column = 0; column < _board.BoardSize; column++)
+            {
+                if (CheckColumnNotEmpty(column) && CheckSameSymbolsInColumn(column))
                 {
-                    //if first row is full with same symbol
-                    if (_board.TileAt(0, 0).Symbol ==
-                        _board.TileAt(0, 1).Symbol &&
-                        _board.TileAt(0, 2).Symbol ==
-                        _board.TileAt(0, 1).Symbol)
-                    {
-                        return _board.TileAt(0, 0).Symbol;
-                    }
+                    return _board.TileAt(column, 0).Symbol;
                 }
+            }
             
-            //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
-            if (_board.TileAt(1, 0).Symbol != Symbol.Empty &&
-               _board.TileAt(1, 1).Symbol != Symbol.Empty &&
-               _board.TileAt(1, 2).Symbol != Symbol.Empty)
+            for (int row = 0; row < _board.BoardSize; row++)
             {
-                //if middle row is full with same symbol
-                if (_board.TileAt(1, 0).Symbol ==
-                    _board.TileAt(1, 1).Symbol &&
-                    _board.TileAt(1, 2).Symbol ==
-                    _board.TileAt(1, 1).Symbol)
+                if (CheckRowNotEmpty(row) && CheckSameSymbolsInRow(row))
                 {
-                    return _board.TileAt(1, 0).Symbol;
+                    return _board.TileAt(0, row).Symbol;
                 }
             }
-
-            //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
-            if (_board.TileAt(2, 0).Symbol != Symbol.Empty &&
-               _board.TileAt(2, 1).Symbol != Symbol.Empty &&
-               _board.TileAt(2, 2).Symbol != Symbol.Empty)
-            {
-                //if middle row is full with same symbol
-                if (_board.TileAt(2, 0).Symbol ==
-                    _board.TileAt(2, 1).Symbol &&
-                    _board.TileAt(2, 2).Symbol ==
-                    _board.TileAt(2, 1).Symbol)
-                {
-                    return _board.TileAt(2, 0).Symbol;
-                }
-            }
-
             return Symbol.Empty;
+        }
+
+        private bool CheckSameSymbolsInColumn(int column)
+        {
+            return _board.TileAt(column, 0).Symbol ==
+                                _board.TileAt(column, 1).Symbol &&
+                                _board.TileAt(column, 2).Symbol ==
+                                _board.TileAt(column, 1).Symbol;
+        }
+
+        private bool CheckColumnNotEmpty(int column)
+        {
+            return _board.TileAt(column, 0).Symbol != Symbol.Empty &&
+                           _board.TileAt(column, 1).Symbol != Symbol.Empty &&
+                           _board.TileAt(column, 2).Symbol != Symbol.Empty;
+        }
+
+        private bool CheckSameSymbolsInRow(int row)
+        {
+            return _board.TileAt(0, row).Symbol ==
+                                _board.TileAt(1, row).Symbol &&
+                                _board.TileAt(2, row).Symbol ==
+                                _board.TileAt(1, row).Symbol;
+        }
+
+        private bool CheckRowNotEmpty(int row)
+        {
+            return _board.TileAt(0, row).Symbol != Symbol.Empty &&
+                           _board.TileAt(1, row).Symbol != Symbol.Empty &&
+                           _board.TileAt(2, row).Symbol != Symbol.Empty;
         }
     }
 }
