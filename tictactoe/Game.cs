@@ -10,17 +10,24 @@
     public class Board //TODO: Large class (file). Move to separate file
     {
         private List<Tile> _plays = new List<Tile>();
-
+        private readonly int _boardSize = 3;
+        private readonly char _emptyTileSymbol = ' ';
         public Board()
         {
-            for (int i = 0; i < 3; i++) //TODO: Extract method: CreateBoard / InstantiateBoard?, magic numbers, 0 and 3, empty tile symbol
+            InitateEmptyBoard();
+        }
+
+        private void InitateEmptyBoard()
+        {
+            for (int row = 0; row < _boardSize; row++) 
             {
-                for (int j = 0; j < 3; j++)
+                for (int column = 0; column < _boardSize; column++)
                 {
-                    _plays.Add(new Tile { X = i, Y = j, Symbol = ' ' });
+                    _plays.Add(new Tile { X = row, Y = column, Symbol = _emptyTileSymbol});
                 }
             }
         }
+
         public Tile TileAt(int x, int y)
         {
             return _plays.Single(tile => tile.X == x && tile.Y == y); //TODO: Duplicate code
@@ -29,27 +36,7 @@
         //Adds a X to the board //TODO: Comment code smell, bad naming
         public void AddTileAt(char symbol, int x, int y) //Inconsistent order of arguments
         {
-            var newTile = new Tile //TODO: Dead code, remove it
-            {
-                X = x,
-                Y = y,
-                Symbol = symbol
-            };
-
             _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol;  //TODO: Duplicate code
-        }
-
-        //Adds a X to the board //TODO: Dead code
-        public void AddXAt_old(int x, int y)
-        {
-            var newTile = new Tile
-            {
-                X = x,
-                Y = y,
-                Symbol = 'X'
-            };
-
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = 'X';
         }
     }
 
