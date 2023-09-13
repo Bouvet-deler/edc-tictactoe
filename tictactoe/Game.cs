@@ -15,7 +15,7 @@
 
     public class Board //TODO: Large class (uncohesive), correct data structure??
     {
-        private List<Tile> _plays = new List<Tile>(); //TODO: Bad naming, is this the correct data structure to use?
+        private List<Tile> _plays = new List<Tile>(); 
         
         
         public Board()
@@ -34,7 +34,7 @@
             }
         }
 
-        public Tile TileAt(int x, int y)
+        public Tile GetTileAt(int x, int y)
         {
             return _plays.Single(tile => tile.X == x && tile.Y == y);
         }
@@ -62,7 +62,7 @@
 
         private void CheckIfTileEmpty(int x, int y)
         {
-            if (_board.TileAt(x, y).Symbol != TileSymbol.empty)
+            if (_board.GetTileAt(x, y).Symbol != TileSymbol.empty)
             {
                 throw new Exception("Invalid position");
             }
@@ -90,16 +90,16 @@
 
         public TileSymbol CheckRow(int row)
         {
-            if (_board.TileAt(row, 0).Symbol != TileSymbol.empty &&
-               _board.TileAt(row, 1).Symbol != TileSymbol.empty &&
-               _board.TileAt(row, 2).Symbol != TileSymbol.empty)
+            if (_board.GetTileAt(row, 0).Symbol != TileSymbol.empty &&
+               _board.GetTileAt(row, 1).Symbol != TileSymbol.empty &&
+               _board.GetTileAt(row, 2).Symbol != TileSymbol.empty)
             {
-                if (_board.TileAt(row, 0).Symbol ==
-                    _board.TileAt(row, 1).Symbol &&
-                    _board.TileAt(row, 2).Symbol ==
-                    _board.TileAt(row, 1).Symbol)
+                if (_board.GetTileAt(row, 0).Symbol ==
+                    _board.GetTileAt(row, 1).Symbol &&
+                    _board.GetTileAt(row, 2).Symbol ==
+                    _board.GetTileAt(row, 1).Symbol)
                 {
-                    return _board.TileAt(row, 0).Symbol;
+                    return _board.GetTileAt(row, 0).Symbol;
                 }
             }
             return TileSymbol.empty;
