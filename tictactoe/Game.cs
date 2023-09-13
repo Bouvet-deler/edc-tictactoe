@@ -12,6 +12,7 @@ namespace tictactoe
     public class Board //TODO: Large class (uncohesive), correct data structure??
     {
         private const int BOARD_SIZE = 3;
+        public static char EMPTY_TILE = ' ';
         private List<Tile> _plays = new List<Tile>(); //TODO: Bad naming, is this the correct data structure to use?
 
         public Board()
@@ -25,7 +26,7 @@ namespace tictactoe
             {
                 for (int j = 0; j < BOARD_SIZE; j++)
                 {
-                    _plays.Add(new Tile { X = i, Y = j, Symbol = ' ' });
+                    _plays.Add(new Tile { X = i, Y = j, Symbol = EMPTY_TILE });
                 }
             }
         }
@@ -64,8 +65,10 @@ namespace tictactoe
 
     public class Game //TODO: Large class (low cohesion), correct data structure?
     {
-        private char _lastSymbol = ' '; //TODO: Magic number, and it's everywhere
+         //TODO: Magic number, and it's everywhere
         private Board _board = new Board();
+        private char _lastSymbol = Board.EMPTY_TILE;
+
 
         public void Play(char symbol, int x, int y) //TODO: Long method, bad and inconsistent naming
         {
