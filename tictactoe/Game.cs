@@ -4,7 +4,7 @@
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public char Symbol { get; set; }
+        public char Mark { get; set; }
     }
 
     public class Board //TODO: Large class (uncohesive), correct data structure??
@@ -23,7 +23,7 @@
             {
                 for (int j = 0; j < DimLength; j++)
                 {
-                    _board.Add(new Tile { X = i, Y = j, Symbol = Constants.Empty });
+                    _board.Add(new Tile { X = i, Y = j, Mark = Constants.Empty });
                 }
             }
         }
@@ -33,10 +33,10 @@
             return _board.Single(tile => tile.X == x && tile.Y == y);
         }
 
-        public void PlaceSymbol(char symbol, int x, int y)
+        public void PlaceMark(char symbol, int x, int y)
         {
 
-            _board.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol;
+            _board.Single(tile => tile.X == x && tile.Y == y).Mark = symbol;
         }
 
 
@@ -45,70 +45,70 @@
 
     public class Game //TODO: Large class (low cohesion), correct data structure?
     {
-        private char _lastSymbol = Constants.Empty; //TODO: Magic number, and it's everywhere
+        private char _lastPlayer = Constants.Empty; 
         private Board _board = new Board();
 
-        public void Play(char symbol, int x, int y) //TODO: Long method, bad and inconsistent naming
+        public void Play(char player, int x, int y) //TODO: Long method, bad and inconsistent naming
         {
-            if (symbol == _lastSymbol || (_lastSymbol == Constants.Empty && symbol == Constants.Circle))
+            if (player == _lastPlayer || (_lastPlayer == Constants.Empty && player == Constants.Circle))
             {
                 throw new Exception("Invalid next player");
             }
           
-            else if (_board.TileAt(x, y).Symbol != Constants.Empty)
+            else if (_board.TileAt(x, y).Mark != Constants.Empty)
             {
                 throw new Exception("Invalid position");
             }
 
             // update game state
-            _lastSymbol = symbol;
-            _board.PlaceSymbol(symbol, x, y);
+            _lastPlayer = player;
+            _board.PlaceMark(player, x, y);
         }
 
         //Decide who lost //TODO: Comment, and its wrong
         public char Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
         {   //if the positions in first row are taken
-            if (_board.TileAt(0, 0).Symbol != Constants.Empty &&
-               _board.TileAt(0, 1).Symbol != Constants.Empty &&
-               _board.TileAt(0, 2).Symbol != Constants.Empty)
+            if (_board.TileAt(0, 0).Mark != Constants.Empty &&
+               _board.TileAt(0, 1).Mark != Constants.Empty &&
+               _board.TileAt(0, 2).Mark != Constants.Empty)
             {
                 //if first row is full with same symbol.
-                if (_board.TileAt(0, 0).Symbol ==
-                    _board.TileAt(0, 1).Symbol &&
-                    _board.TileAt(0, 2).Symbol ==
-                    _board.TileAt(0, 1).Symbol)
+                if (_board.TileAt(0, 0).Mark ==
+                    _board.TileAt(0, 1).Mark &&
+                    _board.TileAt(0, 2).Mark ==
+                    _board.TileAt(0, 1).Mark)
                 {
-                    return _board.TileAt(0, 0).Symbol;
+                    return _board.TileAt(0, 0).Mark;
                 }
             }
 
             //if the positions in first row are taken
-            if (_board.TileAt(1, 0).Symbol != Constants.Empty &&
-               _board.TileAt(1, 1).Symbol != Constants.Empty &&
-               _board.TileAt(1, 2).Symbol != Constants.Empty)
+            if (_board.TileAt(1, 0).Mark != Constants.Empty &&
+               _board.TileAt(1, 1).Mark != Constants.Empty &&
+               _board.TileAt(1, 2).Mark != Constants.Empty)
             {
                 //if middle row is full with same symbol //TODO: Comment, 
-                if (_board.TileAt(1, 0).Symbol ==
-                    _board.TileAt(1, 1).Symbol &&
-                    _board.TileAt(1, 2).Symbol ==
-                    _board.TileAt(1, 1).Symbol)
+                if (_board.TileAt(1, 0).Mark ==
+                    _board.TileAt(1, 1).Mark &&
+                    _board.TileAt(1, 2).Mark ==
+                    _board.TileAt(1, 1).Mark)
                 {
-                    return _board.TileAt(1, 0).Symbol;
+                    return _board.TileAt(1, 0).Mark;
                 }
             }
 
             //if the positions in first row are taken
-            if (_board.TileAt(2, 0).Symbol != Constants.Empty &&
-               _board.TileAt(2, 1).Symbol != Constants.Empty &&
-               _board.TileAt(2, 2).Symbol != Constants.Empty)
+            if (_board.TileAt(2, 0).Mark != Constants.Empty &&
+               _board.TileAt(2, 1).Mark != Constants.Empty &&
+               _board.TileAt(2, 2).Mark != Constants.Empty)
             {
                 //if middle row is full with same symbol //TODO: Comment, and its wrong
-                if (_board.TileAt(2, 0).Symbol ==
-                    _board.TileAt(2, 1).Symbol &&
-                    _board.TileAt(2, 2).Symbol ==
-                    _board.TileAt(2, 1).Symbol)
+                if (_board.TileAt(2, 0).Mark ==
+                    _board.TileAt(2, 1).Mark &&
+                    _board.TileAt(2, 2).Mark ==
+                    _board.TileAt(2, 1).Mark)
                 {
-                    return _board.TileAt(2, 0).Symbol;
+                    return _board.TileAt(2, 0).Mark;
                 }
             }
 
