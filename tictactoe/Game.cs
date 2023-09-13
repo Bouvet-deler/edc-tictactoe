@@ -11,7 +11,7 @@ namespace tictactoe
 
     public class Board //TODO: Large class (uncohesive), correct data structure??
     {
-        private const int BOARD_SIZE = 3;
+        public static int BOARD_SIZE = 3;
         public static char EMPTY_TILE = ' ';
         private List<Tile> _plays = new List<Tile>(); //TODO: Bad naming, is this the correct data structure to use?
 
@@ -78,9 +78,9 @@ namespace tictactoe
         }
 
         //Decide who lost //TODO: Comment, and its wrong
-        public char Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
+        public char Winner() //TODO: Long method, Complicated if statements, bad name (begin with a verb)
         {
-            for (int row = 0; row < 3; row++)
+            for (int row = 0; row < Board.BOARD_SIZE; row++)
             {
                 if (IsRowFilled(row) && IsRowFilledWithSameSymbol(row))
                 {
@@ -94,16 +94,16 @@ namespace tictactoe
         private bool IsRowFilledWithSameSymbol(int row_number)
         {
             return _board.TileAt(row_number, 0).Symbol ==
-                                _board.TileAt(row_number, 1).Symbol &&
-                                _board.TileAt(row_number, 2).Symbol ==
-                                _board.TileAt(row_number, 1).Symbol;
+                _board.TileAt(row_number, 1).Symbol &&
+                _board.TileAt(row_number, 2).Symbol ==
+                _board.TileAt(row_number, 1).Symbol;
         }
 
         private bool IsRowFilled(int row_number)
         {
             return _board.TileAt(row_number, 0).Symbol != Board.EMPTY_TILE &&
-                           _board.TileAt(row_number, 1).Symbol != Board.EMPTY_TILE &&
-                           _board.TileAt(row_number, 2).Symbol != Board.EMPTY_TILE;
+                _board.TileAt(row_number, 1).Symbol != Board.EMPTY_TILE &&
+                _board.TileAt(row_number, 2).Symbol != Board.EMPTY_TILE;
         }
     }
 }
