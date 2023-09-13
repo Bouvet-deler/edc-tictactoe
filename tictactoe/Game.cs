@@ -65,8 +65,7 @@
             _board.PlaceMark(player, x, y);
         }
 
-        //Decide who lost //TODO: Comment, and its wrong
-        public char Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
+        public char FindWinner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
         {   //if the positions in first row are taken
             if (_board.TileAt(0, 0).Mark != Constants.Empty &&
                _board.TileAt(0, 1).Mark != Constants.Empty &&

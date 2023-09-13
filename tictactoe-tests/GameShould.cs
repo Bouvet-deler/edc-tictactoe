@@ -76,7 +76,7 @@ namespace tictactoeTests
             game.Play(Constants.Cross, 0, 2);
 
             // Arrange
-            var winner = game.Winner();
+            var winner = game.FindWinner();
 
             // Assert
             Assert.Equal(Constants.Cross, winner);
@@ -92,7 +92,7 @@ namespace tictactoeTests
             game.Play(Constants.Cross, 1, 1);
             game.Play(Constants.Circle, 0, 2);
 
-            var winner = game.Winner();
+            var winner = game.FindWinner();
 
             Assert.Equal(Constants.Circle, winner);
         }
@@ -106,7 +106,7 @@ namespace tictactoeTests
             game.Play(Constants.Circle, 0, 1);
             game.Play(Constants.Cross, 1, 2);
 
-            var winner = game.Winner();
+            var winner = game.FindWinner();
 
             Assert.Equal(Constants.Cross, winner);
         }
@@ -121,7 +121,7 @@ namespace tictactoeTests
             game.Play(Constants.Cross, 2, 1);
             game.Play(Constants.Circle, 1, 2);
 
-            var winner = game.Winner();
+            var winner = game.FindWinner();
 
             Assert.Equal(Constants.Circle, winner);
         }
@@ -135,7 +135,7 @@ namespace tictactoeTests
             game.Play(Constants.Circle, 0, 1);
             game.Play(Constants.Cross, 2, 2);
 
-            var winner = game.Winner();
+            var winner = game.FindWinner();
 
             Assert.Equal(Constants.Cross, winner);
         }
@@ -152,7 +152,7 @@ namespace tictactoeTests
             game.Play(Constants.Circle, 2, 2);
 
             // Act
-            var winner = game.Winner();
+            var winner = game.FindWinner();
             // Assert
             Assert.Equal(Constants.Circle, winner);
         }
