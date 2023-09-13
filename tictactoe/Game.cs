@@ -4,12 +4,13 @@
     {
         public const int BOARDSIZE = 3;
     }
+    public enum TileSymbol { X, O, empty }
     public class Tile
     {
         public int X { get; set; }
         public int Y { get; set; }
         public TileSymbol Symbol { get; set; }
-        public enum TileSymbol { X, O, empty }
+        
     }
 
     public class Board //TODO: Large class (uncohesive), correct data structure??
@@ -28,7 +29,7 @@
             {
                 for (int j = 0; j < Constants.BOARDSIZE; j++)
                 {
-                    _plays.Add(new Tile { X = i, Y = j, Symbol = Tile.TileSymbol.empty});
+                    _plays.Add(new Tile { X = i, Y = j, Symbol = TileSymbol.empty});
                 }
             }
         }
@@ -39,7 +40,7 @@
         }
 
         //Adds a X to the board
-        public void AddTileAt(Tile.TileSymbol symbol, int x, int y)
+        public void AddTileAt(TileSymbol symbol, int x, int y)
         {
             _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol; //Duplicate code
         }
@@ -47,10 +48,10 @@
 
     public class Game
     {
-        private Tile.TileSymbol _lastSymbol = Tile.TileSymbol.empty; 
+        private TileSymbol _lastSymbol = TileSymbol.empty; 
         private Board _board = new Board();
 
-        public void Play(Tile.TileSymbol symbol, int x, int y)
+        public void Play(TileSymbol symbol, int x, int y)
         {
             CheckFirstPlayerIsX(symbol, x, y);
             CheckRepeatedPlayer(symbol);
@@ -61,13 +62,13 @@
 
         private void CheckIfTileEmpty(int x, int y)
         {
-            if (_board.TileAt(x, y).Symbol != Tile.TileSymbol.empty)
+            if (_board.TileAt(x, y).Symbol != TileSymbol.empty)
             {
                 throw new Exception("Invalid position");
             }
         }
 
-        private void CheckRepeatedPlayer(Tile.TileSymbol symbol)
+        private void CheckRepeatedPlayer(TileSymbol symbol)
         {
             if (symbol == _lastSymbol)
             {
@@ -75,11 +76,11 @@
             }
         }
 
-        private void CheckFirstPlayerIsX(Tile.TileSymbol symbol, int x, int y)
+        private void CheckFirstPlayerIsX(TileSymbol symbol, int x, int y)
         {
-            if (_lastSymbol == Tile.TileSymbol.empty)
+            if (_lastSymbol == TileSymbol.empty)
             {
-                if (symbol == Tile.TileSymbol.O)
+                if (symbol == TileSymbol.O)
                 {
                     throw new Exception("Invalid first player");
                 }
@@ -87,11 +88,11 @@
             
         }
 
-        public Tile.TileSymbol CheckRow(int row)
+        public TileSymbol CheckRow(int row)
         {
-            if (_board.TileAt(row, 0).Symbol != Tile.TileSymbol.empty &&
-               _board.TileAt(row, 1).Symbol != Tile.TileSymbol.empty &&
-               _board.TileAt(row, 2).Symbol != Tile.TileSymbol.empty)
+            if (_board.TileAt(row, 0).Symbol != TileSymbol.empty &&
+               _board.TileAt(row, 1).Symbol != TileSymbol.empty &&
+               _board.TileAt(row, 2).Symbol != TileSymbol.empty)
             {
                 if (_board.TileAt(row, 0).Symbol ==
                     _board.TileAt(row, 1).Symbol &&
@@ -101,19 +102,19 @@
                     return _board.TileAt(row, 0).Symbol;
                 }
             }
-            return Tile.TileSymbol.empty;
+            return TileSymbol.empty;
         }
 
-        public Tile.TileSymbol CheckWinner() 
+        public TileSymbol CheckWinner() 
         {   
             for (int i = 0; i < Constants.BOARDSIZE; i++)
             {
-                Tile.TileSymbol result = CheckRow(i);
-                if (result != Tile.TileSymbol.empty)
+                TileSymbol result = CheckRow(i);
+                if (result != TileSymbol.empty)
                     return result;
             }            
 
-            return Tile.TileSymbol.empty;
+            return TileSymbol.empty;
         }
     }
 }
