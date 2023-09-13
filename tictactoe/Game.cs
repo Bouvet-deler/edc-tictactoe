@@ -80,19 +80,12 @@ namespace tictactoe
         //Decide who lost //TODO: Comment, and its wrong
         public char Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
         {
-            if (IsRowFilled(0) && IsRowFilledWithSameSymbol(0))
+            for (int row = 0; row < 3; row++)
             {
-                return _board.TileAt(0, 0).Symbol;
-            }
-
-            if (IsRowFilled(1) && IsRowFilledWithSameSymbol(1))
-            {
-                return _board.TileAt(1, 0).Symbol;
-            }
-
-            if (IsRowFilled(2) && IsRowFilledWithSameSymbol(2))
-            {
-                return _board.TileAt(2, 0).Symbol;
+                if (IsRowFilled(row) && IsRowFilledWithSameSymbol(row))
+                {
+                    return _board.TileAt(row, 0).Symbol;
+                }
             }
 
             return Board.EMPTY_TILE;
