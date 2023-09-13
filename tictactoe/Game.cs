@@ -39,28 +39,9 @@ namespace tictactoe
         //Adds a X to the board
         public void AddTileAt(char symbol, int x, int y)
         {
-            var newTile = new Tile //TODO: Dead code
-            {
-                X = x,
-                Y = y,
-                Symbol = symbol
-            };
-
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol; //Duplicate code
+            TileAt(x, y).Symbol = symbol; 
         }
 
-        //Adds a X to the board
-        public void AddXAt_old(int x, int y) //TODO: Dead code
-        {
-            var newTile = new Tile
-            {
-                X = x,
-                Y = y,
-                Symbol = 'X'
-            };
-
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = 'X'; //Duplicate code
-        }
     }
 
     public class Game //TODO: Large class (low cohesion), correct data structure?
@@ -73,7 +54,7 @@ namespace tictactoe
         public void Play(char symbol, int x, int y) //TODO: Long method, bad and inconsistent naming
         {
             //if first move
-            if (_lastSymbol == ' ') //TODO: Readability
+            if (_lastSymbol == Board.EMPTY_TILE) //TODO: Readability
             {
                 //if player is X
                 if (symbol == 'O')
@@ -87,7 +68,7 @@ namespace tictactoe
                 throw new Exception("Invalid next player");
             }
             //if not first move but play on an already played tile
-            else if (_board.TileAt(x, y).Symbol != ' ')
+            else if (_board.TileAt(x, y).Symbol != Board.EMPTY_TILE)
             {
                 throw new Exception("Invalid position");
             }
@@ -100,9 +81,9 @@ namespace tictactoe
         //Decide who lost //TODO: Comment, and its wrong
         public char Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
         {   //if the positions in first row are taken
-            if (_board.TileAt(0, 0).Symbol != ' ' &&
-               _board.TileAt(0, 1).Symbol != ' ' &&
-               _board.TileAt(0, 2).Symbol != ' ')
+            if (_board.TileAt(0, 0).Symbol != Board.EMPTY_TILE &&
+               _board.TileAt(0, 1).Symbol != Board.EMPTY_TILE &&
+               _board.TileAt(0, 2).Symbol != Board.EMPTY_TILE)
             {
                 //if first row is full with same symbol.
                 if (_board.TileAt(0, 0).Symbol ==
@@ -115,9 +96,9 @@ namespace tictactoe
             }
 
             //if the positions in first row are taken
-            if (_board.TileAt(1, 0).Symbol != ' ' &&
-               _board.TileAt(1, 1).Symbol != ' ' &&
-               _board.TileAt(1, 2).Symbol != ' ')
+            if (_board.TileAt(1, 0).Symbol != Board.EMPTY_TILE &&
+               _board.TileAt(1, 1).Symbol != Board.EMPTY_TILE &&
+               _board.TileAt(1, 2).Symbol != Board.EMPTY_TILE)
             {
                 //if middle row is full with same symbol //TODO: Comment, 
                 if (_board.TileAt(1, 0).Symbol ==
@@ -130,9 +111,9 @@ namespace tictactoe
             }
 
             //if the positions in first row are taken
-            if (_board.TileAt(2, 0).Symbol != ' ' &&
-               _board.TileAt(2, 1).Symbol != ' ' &&
-               _board.TileAt(2, 2).Symbol != ' ')
+            if (_board.TileAt(2, 0).Symbol != Board.EMPTY_TILE &&
+               _board.TileAt(2, 1).Symbol != Board.EMPTY_TILE &&
+               _board.TileAt(2, 2).Symbol != Board.EMPTY_TILE)
             {
                 //if middle row is full with same symbol //TODO: Comment, and its wrong
                 if (_board.TileAt(2, 0).Symbol ==
@@ -144,7 +125,7 @@ namespace tictactoe
                 }
             }
 
-            return ' ';
+            return Board.EMPTY_TILE;
         }
     }
 }
