@@ -9,21 +9,29 @@
 
     public class Board //TODO: Large class (uncohesive), correct data structure??
     {
-        private List<Tile> _plays = new List<Tile>(); //TODO: Bad naming, is this the correct data structure to use?
+        private const char Empty = ' ';
+        private List<Tile> _board = new List<Tile>(); //TODO: is this the correct data structure to use?
 
         public Board()
         {
-            for (int i = 0; i < 3; i++) //TODO: Readability, extract? Magic number (also on line below)
+            SetupBoard();
+        }
+
+        private void SetupBoard()
+        {
+            const int DimLength = 3;
+            for (int i = 0; i < DimLength; i++) 
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < DimLength; j++)
                 {
-                    _plays.Add(new Tile { X = i, Y = j, Symbol = ' ' });
+                    _board.Add(new Tile { X = i, Y = j, Symbol = Empty });
                 }
             }
         }
+
         public Tile TileAt(int x, int y)
         {
-            return _plays.Single(tile => tile.X == x && tile.Y == y);
+            return _board.Single(tile => tile.X == x && tile.Y == y);
         }
 
         //Adds a X to the board
@@ -36,21 +44,10 @@
                 Symbol = symbol
             };
 
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol; //Duplicate code
+            _board.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol; 
         }
 
-        //Adds a X to the board
-        public void AddXAt_old(int x, int y) //TODO: Dead code
-        {
-            var newTile = new Tile
-            {
-                X = x,
-                Y = y,
-                Symbol = 'X'
-            };
-
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = 'X'; //Duplicate code
-        }
+        
     }
 
     public class Game //TODO: Large class (low cohesion), correct data structure?
