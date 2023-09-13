@@ -58,13 +58,18 @@
             //if not first move but player repeated
             CheckRepeatedPlayer(symbol);
             //if not first move but play on an already played tile
+            CheckIfTileEmpty(x, y);
+            // update game state
+            _lastSymbol = symbol;
+            _board.AddTileAt(symbol, x, y);
+        }
+
+        private void CheckIfTileEmpty(int x, int y)
+        {
             if (_board.TileAt(x, y).Symbol != Tile.TileSymbol.empty)
             {
                 throw new Exception("Invalid position");
             }
-            // update game state
-            _lastSymbol = symbol;
-            _board.AddTileAt(symbol, x, y);
         }
 
         private void CheckRepeatedPlayer(Tile.TileSymbol symbol)
