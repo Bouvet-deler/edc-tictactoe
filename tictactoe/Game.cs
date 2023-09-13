@@ -13,7 +13,7 @@
         
     }
 
-    public class Board //TODO: Large class (uncohesive), correct data structure??
+    public class Board 
     {
         private List<Tile> _plays = new List<Tile>(); 
         
@@ -39,10 +39,10 @@
             return _plays.Single(tile => tile.X == x && tile.Y == y);
         }
 
-        //Adds a X to the board
+  
         public void AddTileAt(TileSymbol symbol, int x, int y)
         {
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol; //Duplicate code
+            GetTileAt(x,y).Symbol = symbol;
         }
     }
 
