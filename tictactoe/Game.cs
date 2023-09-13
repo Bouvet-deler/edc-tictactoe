@@ -36,7 +36,6 @@ namespace tictactoe
             return _plays.Single(tile => tile.X == x && tile.Y == y);
         }
 
-        //Adds a X to the board
         public void AddTileAt(char symbol, int x, int y)
         {
             TileAt(x, y).Symbol = symbol; 
@@ -50,19 +49,24 @@ namespace tictactoe
         private char _lastSymbol = Board.EMPTY_TILE;
 
 
-        public void Play(char symbol, int x, int y) //TODO: Long method, bad and inconsistent naming
+        public void Play(char symbol, int x, int y) //TODO: Long method
         {
             //if first move
-            if (_lastSymbol == Board.EMPTY_TILE) //TODO: Readability
+            CheckValidMove(symbol, x, y);
+
+            // update game state
+            _lastSymbol = symbol;
+            _board.AddTileAt(symbol, x, y);
+        }
+
+        private void CheckValidMove(char symbol, int x, int y)
+        {
+            if (_lastSymbol == Board.EMPTY_TILE && symbol == 'O') //TODO: Readability
             {
-                //if player is X
-                if (symbol == 'O')
-                {
-                    throw new Exception("Invalid first player");
-                }
+                throw new Exception("Invalid first player");
             }
             //if not first move but player repeated
-            else if (symbol == _lastSymbol)
+            if (_lastSymbol != Board.EMPTY_TILE && symbol == _lastSymbol)
             {
                 throw new Exception("Invalid next player");
             }
@@ -71,10 +75,6 @@ namespace tictactoe
             {
                 throw new Exception("Invalid position");
             }
-
-            // update game state
-            _lastSymbol = symbol;
-            _board.AddTileAt(symbol, x, y);
         }
 
         public char FindWinner()
