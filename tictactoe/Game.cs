@@ -45,21 +45,16 @@
         }
     }
 
-    public class Game //TODO: Large class (low cohesion), correct data structure?
+    public class Game
     {
         private Tile.TileSymbol _lastSymbol = Tile.TileSymbol.empty; 
         private Board _board = new Board();
 
-        public void Play(Tile.TileSymbol symbol, int x, int y) //TODO: Long method, bad and inconsistent naming
+        public void Play(Tile.TileSymbol symbol, int x, int y)
         {
-            //if first move
             CheckFirstPlayerIsX(symbol, x, y);
-
-            //if not first move but player repeated
             CheckRepeatedPlayer(symbol);
-            //if not first move but play on an already played tile
             CheckIfTileEmpty(x, y);
-            // update game state
             _lastSymbol = symbol;
             _board.AddTileAt(symbol, x, y);
         }
