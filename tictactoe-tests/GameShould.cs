@@ -4,7 +4,7 @@ using tictactoe;
 
 namespace tictactoeTests
 {
-    public class GameShould
+    public class GameShould //TODO: Comment code smell (arrange act assert)
     {
         private Game game;
 
@@ -66,7 +66,7 @@ namespace tictactoeTests
         }
 
         [Fact]
-        public void DeclarePlayerXAsAWinnerIfThreeInTopRow()
+        public void DeclarePlayerXAsAWinnerIfThreeInTopRow() //TODO: Duplicate code (both in setup and test as a whole), introduce Theory instead if Fact. True for all tests below
         {
             // Act
             game.Play('X', 0, 0);
