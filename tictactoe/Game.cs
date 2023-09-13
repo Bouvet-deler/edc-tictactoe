@@ -71,7 +71,7 @@ namespace tictactoe
                 throw new Exception("Invalid next player");
             }
             //if not first move but play on an already played tile
-            else if (_board.TileAt(x, y).Symbol != Board.EMPTY_TILE)
+            if (_lastSymbol != Board.EMPTY_TILE && _board.TileAt(x, y).Symbol != Board.EMPTY_TILE)
             {
                 throw new Exception("Invalid position");
             }
