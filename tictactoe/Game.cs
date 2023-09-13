@@ -53,16 +53,10 @@
         public void Play(Tile.TileSymbol symbol, int x, int y) //TODO: Long method, bad and inconsistent naming
         {
             //if first move
-            if (_lastSymbol == Tile.TileSymbol.empty) //TODO: Readability
-            {
-                //if player is X
-                if (symbol == Tile.TileSymbol.O)
-                {
-                    throw new Exception("Invalid first player");
-                }
-            }
+            CheckFirstPlayerIsX(symbol, x, y);
+
             //if not first move but player repeated
-            else if (symbol == _lastSymbol)
+            if (symbol == _lastSymbol)
             {
                 throw new Exception("Invalid next player");
             }
@@ -71,10 +65,21 @@
             {
                 throw new Exception("Invalid position");
             }
-
             // update game state
             _lastSymbol = symbol;
             _board.AddTileAt(symbol, x, y);
+        }
+
+        private void CheckFirstPlayerIsX(Tile.TileSymbol symbol, int x, int y)
+        {
+            if (_lastSymbol == Tile.TileSymbol.empty)
+            {
+                if (symbol == Tile.TileSymbol.O)
+                {
+                    throw new Exception("Invalid first player");
+                }
+            }
+            
         }
 
         public Tile.TileSymbol CheckRow(int row)
@@ -83,7 +88,6 @@
                _board.TileAt(row, 1).Symbol != Tile.TileSymbol.empty &&
                _board.TileAt(row, 2).Symbol != Tile.TileSymbol.empty)
             {
-                //if first row is full with same symbol.
                 if (_board.TileAt(row, 0).Symbol ==
                     _board.TileAt(row, 1).Symbol &&
                     _board.TileAt(row, 2).Symbol ==
@@ -95,8 +99,7 @@
             return Tile.TileSymbol.empty;
         }
 
-        //Decide who lost //TODO: Comment, and its wrong
-        public Tile.TileSymbol CheckWinner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
+        public Tile.TileSymbol CheckWinner() 
         {   
             for (int i = 0; i < Constants.BOARDSIZE; i++)
             {
