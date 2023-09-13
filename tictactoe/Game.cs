@@ -65,7 +65,7 @@
             _board.PlaceMark(player, x, y);
         }
 
-        public char FindWinner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
+        public char FindWinner() //TODO: Long method, Duplicate code, Complicated if statements
         {   //if the positions in first row are taken
             if (_board.TileAt(0, 0).Mark != Constants.Empty &&
                _board.TileAt(0, 1).Mark != Constants.Empty &&
