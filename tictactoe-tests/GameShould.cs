@@ -66,6 +66,23 @@ namespace tictactoeTests
         }
 
         [Fact]
+        public void DeclarePlayerXAsAWinnerIfThreeInLeftColumn() //TODO: Duplicate code, use Theory?
+        {
+            // Act //TODO: Comment not needed and actually wrong, Duplicate code
+            game.Play('X', 0, 0);
+            game.Play('O', 0, 1);
+            game.Play('X', 1, 0);
+            game.Play('O', 1, 1);
+            game.Play('X', 2, 0);
+
+            // Arrange //TODO: Comment not needed and actually wrong,
+            var winner = game.DecideWhoWins();
+
+            // Assert //TODO: Comment not needed and actually wrong,
+            Assert.Equal('X', winner);
+        }
+
+        [Fact]
         public void DeclarePlayerXAsAWinnerIfThreeInTopRow() //TODO: Duplicate code, use Theory?
         {
             // Act //TODO: Comment not needed and actually wrong, Duplicate code
@@ -76,11 +93,12 @@ namespace tictactoeTests
             game.Play('X', 0, 2);
 
             // Arrange //TODO: Comment not needed and actually wrong,
-            var winner = game.Winner();
+            var winner = game.DecideWhoWins();
 
             // Assert //TODO: Comment not needed and actually wrong,
             Assert.Equal('X', winner);
         }
+
 
         [Fact]
         public void DeclarePlayerOAsAWinnerIfThreeInTopRow() //TODO: Duplicate code, use Theory?
@@ -92,9 +110,23 @@ namespace tictactoeTests
             game.Play('X', 1, 1);
             game.Play('O', 0, 2);
 
-            var winner = game.Winner();
+            var winner = game.DecideWhoWins();
 
             Assert.Equal('O', winner);
+        }
+
+        [Fact]
+        public void DeclarePlayerXAsAWinnerIfLeftDiagonal() //TODO: Duplicate code, use Theory?
+        {
+            game.Play('X', 0, 0);
+            game.Play('O', 0, 1);
+            game.Play('X', 1, 1);
+            game.Play('O', 0, 2);
+            game.Play('X', 2, 2);
+
+            var winner = game.DecideWhoWins();
+
+            Assert.Equal('X', winner);
         }
 
         [Fact]
@@ -106,7 +138,7 @@ namespace tictactoeTests
             game.Play('O', 0, 1);
             game.Play('X', 1, 2);
 
-            var winner = game.Winner();
+            var winner = game.DecideWhoWins();
 
             Assert.Equal('X', winner);
         }
@@ -121,7 +153,7 @@ namespace tictactoeTests
             game.Play('X', 2, 1);
             game.Play('O', 1, 2);
 
-            var winner = game.Winner();
+            var winner = game.DecideWhoWins();
 
             Assert.Equal('O', winner);
         }
@@ -135,7 +167,7 @@ namespace tictactoeTests
             game.Play('O', 0, 1);
             game.Play('X', 2, 2);
 
-            var winner = game.Winner();
+            var winner = game.DecideWhoWins();
 
             Assert.Equal('X', winner);
         }
@@ -152,7 +184,7 @@ namespace tictactoeTests
             game.Play('O', 2, 2);
 
             // Act
-            var winner = game.Winner();
+            var winner = game.DecideWhoWins();
             // Assert
             Assert.Equal('O', winner);
         }
