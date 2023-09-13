@@ -4,13 +4,15 @@
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public char Symbol { get; set; }
+        public TileSymbol Symbol { get; set; }
+        public enum TileSymbol { X, O, empty }
     }
 
     public class Board //TODO: Large class (uncohesive), correct data structure??
     {
         private List<Tile> _plays = new List<Tile>(); //TODO: Bad naming, is this the correct data structure to use?
         private const int BOARDSIZE = 3;
+        
         public Board()
         {
             InitBoard();
@@ -18,11 +20,11 @@
 
         private void InitBoard()
         {
-            for (int i = 0; i < BOARDSIZE; i++) //TODO: Readability, extract? Magic number (also on line below)
+            for (int i = 0; i < BOARDSIZE; i++) 
             {
                 for (int j = 0; j < BOARDSIZE; j++)
                 {
-                    _plays.Add(new Tile { X = i, Y = j, Symbol = ' ' });
+                    _plays.Add(new Tile { X = i, Y = j, Symbol = Tile.TileSymbol.empty});
                 }
             }
         }
@@ -33,7 +35,7 @@
         }
 
         //Adds a X to the board
-        public void AddTileAt(char symbol, int x, int y)
+        public void AddTileAt(Tile.TileSymbol symbol, int x, int y)
         {
             var newTile = new Tile //TODO: Dead code
             {
@@ -45,32 +47,21 @@
             _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol; //Duplicate code
         }
 
-        //Adds a X to the board
-        public void AddXAt_old(int x, int y) //TODO: Dead code
-        {
-            var newTile = new Tile
-            {
-                X = x,
-                Y = y,
-                Symbol = 'X'
-            };
 
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = 'X'; //Duplicate code
-        }
     }
 
     public class Game //TODO: Large class (low cohesion), correct data structure?
     {
-        private char _lastSymbol = ' '; //TODO: Magic number, and it's everywhere
+        private Tile.TileSymbol _lastSymbol = Tile.TileSymbol.empty; 
         private Board _board = new Board();
 
-        public void Play(char symbol, int x, int y) //TODO: Long method, bad and inconsistent naming
+        public void Play(Tile.TileSymbol symbol, int x, int y) //TODO: Long method, bad and inconsistent naming
         {
             //if first move
-            if (_lastSymbol == ' ') //TODO: Readability
+            if (_lastSymbol == Tile.TileSymbol.empty) //TODO: Readability
             {
                 //if player is X
-                if (symbol == 'O')
+                if (symbol == Tile.TileSymbol.O)
                 {
                     throw new Exception("Invalid first player");
                 }
@@ -81,7 +72,7 @@
                 throw new Exception("Invalid next player");
             }
             //if not first move but play on an already played tile
-            else if (_board.TileAt(x, y).Symbol != ' ')
+            else if (_board.TileAt(x, y).Symbol != Tile.TileSymbol.empty)
             {
                 throw new Exception("Invalid position");
             }
@@ -92,11 +83,11 @@
         }
 
         //Decide who lost //TODO: Comment, and its wrong
-        public char Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
+        public Tile.TileSymbol Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
         {   //if the positions in first row are taken
-            if (_board.TileAt(0, 0).Symbol != ' ' &&
-               _board.TileAt(0, 1).Symbol != ' ' &&
-               _board.TileAt(0, 2).Symbol != ' ')
+            if (_board.TileAt(0, 0).Symbol != Tile.TileSymbol.empty &&
+               _board.TileAt(0, 1).Symbol != Tile.TileSymbol.empty &&
+               _board.TileAt(0, 2).Symbol != Tile.TileSymbol.empty)
             {
                 //if first row is full with same symbol.
                 if (_board.TileAt(0, 0).Symbol ==
@@ -109,9 +100,9 @@
             }
 
             //if the positions in first row are taken
-            if (_board.TileAt(1, 0).Symbol != ' ' &&
-               _board.TileAt(1, 1).Symbol != ' ' &&
-               _board.TileAt(1, 2).Symbol != ' ')
+            if (_board.TileAt(1, 0).Symbol != Tile.TileSymbol.empty &&
+               _board.TileAt(1, 1).Symbol != Tile.TileSymbol.empty &&
+               _board.TileAt(1, 2).Symbol != Tile.TileSymbol.empty)
             {
                 //if middle row is full with same symbol //TODO: Comment, 
                 if (_board.TileAt(1, 0).Symbol ==
@@ -124,9 +115,9 @@
             }
 
             //if the positions in first row are taken
-            if (_board.TileAt(2, 0).Symbol != ' ' &&
-               _board.TileAt(2, 1).Symbol != ' ' &&
-               _board.TileAt(2, 2).Symbol != ' ')
+            if (_board.TileAt(2, 0).Symbol != Tile.TileSymbol.empty &&
+               _board.TileAt(2, 1).Symbol != Tile.TileSymbol.empty &&
+               _board.TileAt(2, 2).Symbol != Tile.TileSymbol.empty)
             {
                 //if middle row is full with same symbol //TODO: Comment, and its wrong
                 if (_board.TileAt(2, 0).Symbol ==
@@ -138,7 +129,7 @@
                 }
             }
 
-            return ' ';
+            return Tile.TileSymbol.empty;
         }
     }
 }
