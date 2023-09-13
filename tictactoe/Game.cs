@@ -33,9 +33,8 @@
         {
             return _board.Single(tile => tile.X == x && tile.Y == y);
         }
-
-        //Adds a X to the board
-        public void AddTileAt(char symbol, int x, int y)
+        
+        public void PlaceSymbol(char symbol, int x, int y)
         {
             
             _board.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol; 
@@ -73,7 +72,7 @@
 
             // update game state
             _lastSymbol = symbol;
-            _board.AddTileAt(symbol, x, y);
+            _board.PlaceSymbol(symbol, x, y);
         }
 
         //Decide who lost //TODO: Comment, and its wrong
