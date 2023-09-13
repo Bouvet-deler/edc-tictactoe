@@ -96,8 +96,8 @@
         }
 
         //Decide who lost //TODO: Comment, and its wrong
-        public Tile.TileSymbol Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
-        {   //if the positions in first row are taken
+        public Tile.TileSymbol CheckWinner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
+        {   
             for (int i = 0; i < Constants.BOARDSIZE; i++)
             {
                 Tile.TileSymbol result = CheckRow(i);
