@@ -1,4 +1,6 @@
-﻿namespace tictactoe
+﻿using System.Reflection.Metadata;
+
+namespace tictactoe
 {
     public class Tile
     {
@@ -9,18 +11,25 @@
 
     public class Board //TODO: Large class (uncohesive), correct data structure??
     {
+        private const int BOARD_SIZE = 3;
         private List<Tile> _plays = new List<Tile>(); //TODO: Bad naming, is this the correct data structure to use?
 
         public Board()
         {
-            for (int i = 0; i < 3; i++) //TODO: Readability, extract? Magic number (also on line below)
+            InitilizeBoard();
+        }
+
+        private void InitilizeBoard()
+        {
+            for (int i = 0; i < BOARD_SIZE; i++) //TODO: Magic number (also on line below)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < BOARD_SIZE; j++)
                 {
                     _plays.Add(new Tile { X = i, Y = j, Symbol = ' ' });
                 }
             }
         }
+
         public Tile TileAt(int x, int y)
         {
             return _plays.Single(tile => tile.X == x && tile.Y == y);
