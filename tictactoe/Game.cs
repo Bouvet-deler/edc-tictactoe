@@ -77,8 +77,7 @@ namespace tictactoe
             _board.AddTileAt(symbol, x, y);
         }
 
-        //Decide who lost //TODO: Comment, and its wrong
-        public char Winner() //TODO: Long method, Complicated if statements, bad name (begin with a verb)
+        public char FindWinner()
         {
             for (int row = 0; row < Board.BOARD_SIZE; row++)
             {
