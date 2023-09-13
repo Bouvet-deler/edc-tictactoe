@@ -76,7 +76,7 @@ namespace tictactoeTests
             game.Play('X', 0, 2);
 
             // Arrange //TODO: Comment not needed and actually wrong,
-            var winner = game.Winner();
+            var winner = game.DecideWinner();
 
             // Assert //TODO: Comment not needed and actually wrong,
             Assert.Equal('X', winner);
@@ -92,7 +92,7 @@ namespace tictactoeTests
             game.Play('X', 1, 1);
             game.Play('O', 0, 2);
 
-            var winner = game.Winner();
+            var winner = game.DecideWinner();
 
             Assert.Equal('O', winner);
         }
@@ -106,7 +106,7 @@ namespace tictactoeTests
             game.Play('O', 0, 1);
             game.Play('X', 1, 2);
 
-            var winner = game.Winner();
+            var winner = game.DecideWinner();
 
             Assert.Equal('X', winner);
         }
@@ -121,7 +121,7 @@ namespace tictactoeTests
             game.Play('X', 2, 1);
             game.Play('O', 1, 2);
 
-            var winner = game.Winner();
+            var winner = game.DecideWinner();
 
             Assert.Equal('O', winner);
         }
@@ -135,7 +135,7 @@ namespace tictactoeTests
             game.Play('O', 0, 1);
             game.Play('X', 2, 2);
 
-            var winner = game.Winner();
+            var winner = game.DecideWinner();
 
             Assert.Equal('X', winner);
         }
@@ -152,7 +152,7 @@ namespace tictactoeTests
             game.Play('O', 2, 2);
 
             // Act
-            var winner = game.Winner();
+            var winner = game.DecideWinner();
             // Assert
             Assert.Equal('O', winner);
         }

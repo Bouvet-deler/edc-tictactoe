@@ -1,67 +1,27 @@
-﻿namespace tictactoe
+﻿using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
+
+namespace tictactoe
 {
-    public class Tile //TODO: Large class (file). Move to separate file
-    {
-        public int X { get; set; } //TODO: Primitive obsession
-        public int Y { get; set; } //TODO: Primitive obsession
-        public char Symbol { get; set; }
-    }
-
-    public class Board //TODO: Large class (file). Move to separate file
-    {
-        private List<Tile> _plays = new List<Tile>();
-
-        public Board()
-        {
-            for (int i = 0; i < 3; i++) //TODO: Extract method: CreateBoard / InstantiateBoard?, magic numbers, 0 and 3, empty tile symbol
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    _plays.Add(new Tile { X = i, Y = j, Symbol = ' ' });
-                }
-            }
-        }
-        public Tile TileAt(int x, int y)
-        {
-            return _plays.Single(tile => tile.X == x && tile.Y == y); //TODO: Duplicate code
-        }
-
-        //Adds a X to the board //TODO: Comment code smell, bad naming
-        public void AddTileAt(char symbol, int x, int y) //Inconsistent order of arguments
-        {
-            var newTile = new Tile //TODO: Dead code, remove it
-            {
-                X = x,
-                Y = y,
-                Symbol = symbol
-            };
-
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = symbol;  //TODO: Duplicate code
-        }
-
-        //Adds a X to the board //TODO: Dead code
-        public void AddXAt_old(int x, int y)
-        {
-            var newTile = new Tile
-            {
-                X = x,
-                Y = y,
-                Symbol = 'X'
-            };
-
-            _plays.Single(tile => tile.X == x && tile.Y == y).Symbol = 'X';
-        }
-    }
 
     public class Game
     {
-        private char _lastSymbol = ' ';
-        private Board _board = new Board(); //TODO: Use new shorthand syntax
+        private char _lastSymbol = Constants.EMPTYTILE;
+        private Board _board = new(); 
 
-        public void Play(char symbol, int x, int y) //TODO: Introduce assertion, long method
+        public void Play(char symbol, int x, int y) //TODO: Introduce assertion
         {
-            //if first move
-            if (_lastSymbol == ' ') //Todo: Complicated if statements, and not really related
+            ValidatePlay(symbol, x, y);
+
+            // update game state
+            _lastSymbol = symbol;
+            _board.AddSymbolAtTile(x, y, symbol);
+        }
+
+        private void ValidatePlay(char symbol, int x, int y)
+        {
+            // if first move
+            if (_lastSymbol == Constants.EMPTYTILE) //Todo: Complicated if statements, and not really related
             {
                 //if player is X //TODO: Comment, it's wrong
                 if (symbol == 'O')
@@ -75,60 +35,60 @@
                 throw new Exception("Invalid next player");
             }
             //if not first move but play on an already played tile
-            else if (_board.TileAt(x, y).Symbol != ' ')
+            else if (_board.GetTileAtPosition(x, y).Symbol != ' ')
             {
                 throw new Exception("Invalid position");
             }
 
-            // update game state
-            _lastSymbol = symbol;
-            _board.AddTileAt(symbol, x, y);
+            if ((x is < 0 or > Constants.BOARDSIZE-1) | (y is < 0 or > Constants.BOARDSIZE-1))
+            {
+                throw new Exception("Invalid position on board");
+            }
         }
 
-        //Decide who lost 
-        public char Winner() //TODO: Bad naming, magic numbers all over (row number, column number, empty tile, 
+        public char DecideWinner() //TODO: magic numbers all over (row number, column number, empty tile, 
         {   //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
-            if (_board.TileAt(0, 0).Symbol != ' ' &&
-               _board.TileAt(0, 1).Symbol != ' ' &&
-               _board.TileAt(0, 2).Symbol != ' ')
+            if (_board.GetTileAtPosition(0, 0).Symbol != ' ' &&
+               _board.GetTileAtPosition(0, 1).Symbol != ' ' &&
+               _board.GetTileAtPosition(0, 2).Symbol != ' ')
             {
                 //if first row is full with same symbol
-                if (_board.TileAt(0, 0).Symbol ==
-                    _board.TileAt(0, 1).Symbol &&
-                    _board.TileAt(0, 2).Symbol ==
-                    _board.TileAt(0, 1).Symbol)
+                if (_board.GetTileAtPosition(0, 0).Symbol ==
+                    _board.GetTileAtPosition(0, 1).Symbol &&
+                    _board.GetTileAtPosition(0, 2).Symbol ==
+                    _board.GetTileAtPosition(0, 1).Symbol)
                 {
-                    return _board.TileAt(0, 0).Symbol;
+                    return _board.GetTileAtPosition(0, 0).Symbol;
                 }
             }
 
             //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
-            if (_board.TileAt(1, 0).Symbol != ' ' &&
-               _board.TileAt(1, 1).Symbol != ' ' &&
-               _board.TileAt(1, 2).Symbol != ' ')
+            if (_board.GetTileAtPosition(1, 0).Symbol != ' ' &&
+               _board.GetTileAtPosition(1, 1).Symbol != ' ' &&
+               _board.GetTileAtPosition(1, 2).Symbol != ' ')
             {
                 //if middle row is full with same symbol
-                if (_board.TileAt(1, 0).Symbol ==
-                    _board.TileAt(1, 1).Symbol &&
-                    _board.TileAt(1, 2).Symbol ==
-                    _board.TileAt(1, 1).Symbol)
+                if (_board.GetTileAtPosition(1, 0).Symbol ==
+                    _board.GetTileAtPosition(1, 1).Symbol &&
+                    _board.GetTileAtPosition(1, 2).Symbol ==
+                    _board.GetTileAtPosition(1, 1).Symbol)
                 {
-                    return _board.TileAt(1, 0).Symbol;
+                    return _board.GetTileAtPosition(1, 0).Symbol;
                 }
             }
 
             //if the positions in first row are taken //TODO: Comment code smell, and comment is incorrect, duplicate code
-            if (_board.TileAt(2, 0).Symbol != ' ' &&
-               _board.TileAt(2, 1).Symbol != ' ' &&
-               _board.TileAt(2, 2).Symbol != ' ')
+            if (_board.GetTileAtPosition(2, 0).Symbol != ' ' &&
+               _board.GetTileAtPosition(2, 1).Symbol != ' ' &&
+               _board.GetTileAtPosition(2, 2).Symbol != ' ')
             {
                 //if middle row is full with same symbol
-                if (_board.TileAt(2, 0).Symbol ==
-                    _board.TileAt(2, 1).Symbol &&
-                    _board.TileAt(2, 2).Symbol ==
-                    _board.TileAt(2, 1).Symbol)
+                if (_board.GetTileAtPosition(2, 0).Symbol ==
+                    _board.GetTileAtPosition(2, 1).Symbol &&
+                    _board.GetTileAtPosition(2, 2).Symbol ==
+                    _board.GetTileAtPosition(2, 1).Symbol)
                 {
-                    return _board.TileAt(2, 0).Symbol;
+                    return _board.GetTileAtPosition(2, 0).Symbol;
                 }
             }
 
