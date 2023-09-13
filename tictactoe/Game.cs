@@ -79,46 +79,40 @@ namespace tictactoe
 
         //Decide who lost //TODO: Comment, and its wrong
         public char Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
-        {   //if the positions in first row are taken
+        {   
             if (IsRowFilled(0))
             {
-                //if first row is full with same symbol.
-                if (_board.TileAt(0, 0).Symbol ==
-                    _board.TileAt(0, 1).Symbol &&
-                    _board.TileAt(0, 2).Symbol ==
-                    _board.TileAt(0, 1).Symbol)
+                if (IsRowFilledWithSameSymbol(0))
                 {
                     return _board.TileAt(0, 0).Symbol;
                 }
             }
 
-            //if the positions in first row are taken
             if (IsRowFilled(1))
             {
-                //if middle row is full with same symbol //TODO: Comment, 
-                if (_board.TileAt(1, 0).Symbol ==
-                    _board.TileAt(1, 1).Symbol &&
-                    _board.TileAt(1, 2).Symbol ==
-                    _board.TileAt(1, 1).Symbol)
+                if (IsRowFilledWithSameSymbol(1))
                 {
                     return _board.TileAt(1, 0).Symbol;
                 }
             }
 
-            //if the positions in first row are taken
             if (IsRowFilled(2))
             {
-                //if middle row is full with same symbol //TODO: Comment, and its wrong
-                if (_board.TileAt(2, 0).Symbol ==
-                    _board.TileAt(2, 1).Symbol &&
-                    _board.TileAt(2, 2).Symbol ==
-                    _board.TileAt(2, 1).Symbol)
+                if (IsRowFilledWithSameSymbol(2))
                 {
                     return _board.TileAt(2, 0).Symbol;
                 }
             }
 
             return Board.EMPTY_TILE;
+        }
+
+        private bool IsRowFilledWithSameSymbol(int row_number)
+        {
+            return _board.TileAt(row_number, 0).Symbol ==
+                                _board.TileAt(row_number, 1).Symbol &&
+                                _board.TileAt(row_number, 2).Symbol ==
+                                _board.TileAt(row_number, 1).Symbol;
         }
 
         private bool IsRowFilled(int row_number)
