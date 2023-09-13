@@ -46,7 +46,6 @@ namespace tictactoe
 
     public class Game //TODO: Large class (low cohesion), correct data structure?
     {
-         //TODO: Magic number, and it's everywhere
         private Board _board = new Board();
         private char _lastSymbol = Board.EMPTY_TILE;
 
@@ -81,9 +80,7 @@ namespace tictactoe
         //Decide who lost //TODO: Comment, and its wrong
         public char Winner() //TODO: Long method, Duplicate code, Complicated if statements, bad name (begin with a verb)
         {   //if the positions in first row are taken
-            if (_board.TileAt(0, 0).Symbol != Board.EMPTY_TILE &&
-               _board.TileAt(0, 1).Symbol != Board.EMPTY_TILE &&
-               _board.TileAt(0, 2).Symbol != Board.EMPTY_TILE)
+            if (IsRowFilled(0))
             {
                 //if first row is full with same symbol.
                 if (_board.TileAt(0, 0).Symbol ==
@@ -96,9 +93,7 @@ namespace tictactoe
             }
 
             //if the positions in first row are taken
-            if (_board.TileAt(1, 0).Symbol != Board.EMPTY_TILE &&
-               _board.TileAt(1, 1).Symbol != Board.EMPTY_TILE &&
-               _board.TileAt(1, 2).Symbol != Board.EMPTY_TILE)
+            if (IsRowFilled(1))
             {
                 //if middle row is full with same symbol //TODO: Comment, 
                 if (_board.TileAt(1, 0).Symbol ==
@@ -111,9 +106,7 @@ namespace tictactoe
             }
 
             //if the positions in first row are taken
-            if (_board.TileAt(2, 0).Symbol != Board.EMPTY_TILE &&
-               _board.TileAt(2, 1).Symbol != Board.EMPTY_TILE &&
-               _board.TileAt(2, 2).Symbol != Board.EMPTY_TILE)
+            if (IsRowFilled(2))
             {
                 //if middle row is full with same symbol //TODO: Comment, and its wrong
                 if (_board.TileAt(2, 0).Symbol ==
@@ -126,6 +119,13 @@ namespace tictactoe
             }
 
             return Board.EMPTY_TILE;
+        }
+
+        private bool IsRowFilled(int row_number)
+        {
+            return _board.TileAt(row_number, 0).Symbol != Board.EMPTY_TILE &&
+                           _board.TileAt(row_number, 1).Symbol != Board.EMPTY_TILE &&
+                           _board.TileAt(row_number, 2).Symbol != Board.EMPTY_TILE;
         }
     }
 }
