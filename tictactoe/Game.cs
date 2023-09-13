@@ -83,6 +83,9 @@
                     return _board.TileAt(0, row).Symbol;
                 }
             }
+
+            // TODO: should check after diagonal line here
+
             return Symbol.Empty;
         }
 
